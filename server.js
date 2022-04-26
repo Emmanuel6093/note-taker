@@ -17,7 +17,7 @@ app.use(express.json());
 // PORT 
 const PORT = 3000;
 
-app.get('/', function (res, req) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 }); 
 
@@ -25,9 +25,9 @@ app.use('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 }); 
 
-app.use('/api/notes', (req, res) => {
-    res.json([{'title':'Test Title','text':'Test text'}])
-});``
+app.get('/api/notes', function (req, res) {
+    res.sendFile(path.join(__dirname, '/db/db.json'))
+}); 
 
 app.listen(PORT, e => console.log('Running'))
 
