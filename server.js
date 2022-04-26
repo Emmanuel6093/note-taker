@@ -29,5 +29,9 @@ app.get('/api/notes', function (req, res) {
     res.sendFile(path.join(__dirname, '/db/db.json'))
 }); 
 
+app.get('api/notes:id', function (req, res) {
+    let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
+});
+
 app.listen(PORT, e => console.log('Running'))
 
