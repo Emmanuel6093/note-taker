@@ -30,7 +30,8 @@ app.get('/api/notes', function (req, res) {
 }); 
 
 app.get('api/notes:id', function (req, res) {
-    let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
+    let SavedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
+    res.json(SavedNotes[Number(req.params.id)]);
 });
 
 app.listen(PORT, e => console.log('Running'))
