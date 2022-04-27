@@ -31,24 +31,23 @@ app.get('/api/notes', function (req, res) {
 
 // save notes with id 
 app.get('api/notes:id', function (req, res) {
-    let SavedNotes = JSON.parse(fs.readFileSync('/db/db.json', 'utf8'));
+    let SavedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
     res.json(SavedNotes[Number(req.params.id)]);
 });
 
-app.get('*', function (req, res) {
-    res.sendFile(path.join(mainDir, 'index.html'))
+app.get("*", function(req,res){
+    res.sendFile(path.join(__dirname, "./public/index.html"))
 });
 
 app.post('/api/notes', function (req, res) {
-    let savedNotes = JSON.parse(fs.readFileSync('/db/db.json', 'utf8'));
+    let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
     let newNote = req.body; 
-    let uniqueID = uniqueID;
-
+    let uniqueID = (savedNotes.length).toString();
     newNote.id = uniqueID;
 
     savedNotes.push(newNote); 
 
-    fs.writeFile('./db/db.json', JSON.stringify(savedNotes));
+    fs.writeFileSync('./db/db.json', JSON.stringify(savedNotes));
 
     console.log("Note saved to db.json. Content:", newNote);
 
