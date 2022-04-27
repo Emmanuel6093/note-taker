@@ -1,3 +1,5 @@
+// PORT
+const PORT = process.env.PORT || 3000; 
 const fs = require('fs'); 
 const path = require('path'); 
 
@@ -14,8 +16,6 @@ app.use(express.urlencoded({
 
 app.use(express.json()); 
 
-// PORT 
-const PORT = 3000;
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/index.html'))
@@ -31,7 +31,7 @@ app.get('/api/notes', function (req, res) {
 
 // save notes with id 
 app.get('api/notes:id', function (req, res) {
-    let SavedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+    let SavedNotes = JSON.parse(fs.readFileSync('/db/db.json', 'utf8'));
     res.json(SavedNotes[Number(req.params.id)]);
 });
 
@@ -40,9 +40,11 @@ app.get('*', function (req, res) {
 });
 
 app.post('/api/notes', function (req, res) {
-    let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+    let savedNotes = JSON.parse(fs.readFileSync('/db/db.json', 'utf8'));
     let newNote = req.body; 
     let uniqueID = uniqueID;
+
+    newNote.id = uniqueID;
 
     savedNotes.push(newNote); 
 
@@ -53,5 +55,5 @@ app.post('/api/notes', function (req, res) {
     res.json(savedNotes); 
 })
 
-app.listen(PORT, e => console.log('Running'))
+app.listen(PORT, e => console.log('Running on port 3000'))
 
